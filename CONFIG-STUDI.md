@@ -1,9 +1,9 @@
-# 🎓 Configuration pour Studi (app.studi.fr)
+# 🎓 Configuration pour Sites (app.sites.net)
 
 ## Comment obtenir les sélecteurs pour Studi
 
 ### Étape 1 : Ouvrir la page de connexion
-1. Allez sur https://app.studi.fr/v3/login
+1. Allez sur https://app.sites.net/login
 2. Attendez que la page soit complètement chargée
 
 ### Étape 2 : Ouvrir les outils de développement
@@ -25,7 +25,7 @@
    - `autocomplete="..."` → Notez la valeur (ex: "username" ou "email")
    - `type="..."` → Notez le type (probablement "text" ou "email")
 
-**Sélecteurs possibles pour Studi :**
+**Sélecteurs possibles pour Sites :**
 ```css
 /* Exemples courants pour les plateformes éducatives */
 #email
@@ -89,22 +89,22 @@ button.submit-button
 
 **Exemple de ce que vous devriez obtenir :**
 ```
-#studi-email-input
+#sites-email-input
 input[name="user[email]"]
 button[data-testid="login-submit"]
 ```
 
 ---
 
-## 📋 Template de configuration Studi
+## 📋 Template de configuration Sites
 
 Utilisez ce template et remplacez avec vos valeurs réelles :
 
 ### Dans l'extension Auto Login :
 
-**Nom du site :** Studi
+**Nom du site :** Sites
 
-**URL du site :** https://app.studi.fr/v3/login
+**URL du site :** https://app.sites.net/login
 
 **Sélecteur champ email :**
 ```
@@ -132,7 +132,7 @@ button[type="submit"]
 
 ### Option 1 : Détection automatique
 1. Installez l'extension Auto Login
-2. Allez sur https://app.studi.fr/v3/login
+2. Allez sur https://app.sites.net/login
 3. Cliquez sur l'icône de l'extension
 4. Cliquez sur "🔍 Détecter automatiquement les sélecteurs"
 5. L'extension devrait trouver automatiquement les champs !
@@ -141,7 +141,7 @@ button[type="submit"]
 1. Cliquez sur l'icône de l'extension
 2. Cliquez sur "+ Ajouter un nouveau site"
 3. Cliquez sur les boutons 🎯 à côté de chaque champ
-4. Cliquez sur les éléments correspondants dans la page Studi
+4. Cliquez sur les éléments correspondants dans la page Sites
 5. Les sélecteurs sont capturés automatiquement !
 
 ---
@@ -169,10 +169,10 @@ autocomplete="new-password"      <!-- Pour l'inscription -->
 
 ---
 
-## ⚠️ Notes importantes pour Studi
+## ⚠️ Notes importantes pour Sites
 
 ### Si les sélecteurs changent fréquemment :
-Studi pourrait utiliser des classes CSS générées (CSS-in-JS) qui changent à chaque mise à jour. Dans ce cas :
+Sites pourrait utiliser des classes CSS générées (CSS-in-JS) qui changent à chaque mise à jour. Dans ce cas :
 
 **Privilégiez :**
 1. Les sélecteurs par `type` : `input[type="password"]`
@@ -208,9 +208,9 @@ Une fois configuré :
    - Vérifiez que les champs se remplissent
 
 2. **Test automatique :**
-   - Déconnectez-vous de Studi
+   - Déconnectez-vous de Sites
    - Fermez l'onglet
-   - Rouvrez https://app.studi.fr/v3/login
+   - Rouvrez https://app.sites.net/login
    - L'extension devrait se connecter automatiquement !
 
 3. **Test de reconnexion :**
@@ -225,8 +225,8 @@ Voici à quoi devrait ressembler votre configuration finale (avec vos vraies val
 
 ```json
 {
-  "name": "Studi",
-  "url": "https://app.studi.fr/v3/login",
+  "name": "Sites",
+  "url": "https://app.sites.fr/login",
   "emailSelector": "input[type='email']",
   "email": "votre.email@exemple.fr",
   "passwordSelector": "input[type='password']",
@@ -261,4 +261,4 @@ Si vous rencontrez des difficultés :
 
 ---
 
-**Bonne chance avec votre configuration Studi ! 🎓**
+**Bonne chance avec votre configuration Studieuse Rrrrr ! 🎓**
