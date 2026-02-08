@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 350px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      border-radius: 8px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 15px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-success {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .saved-sites {
+      margin-top: 15px;
+    }
+
+    .site-item {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-info {
+      flex: 1;
+    }
+
+    .site-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .site-url {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 3px;
+    }
+
+    .message {
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .message-success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .message-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .toggle-section {
+      color: #667eea;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔐 Auto Login</h1>
+    </div>
+    
+    <div class="content">
+      <div id="message" class="hidden"></div>
+      
+      <button id="loginBtn" class="btn btn-success">🚀 Se connecter maintenant</button>
+      
+      <button id="autoDetectBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-bottom: 10px;">
+        🔍 Détecter automatiquement les sélecteurs
+      </button>
+      
+      <div style="margin: 15px 0; padding: 12px; background: #f3f4f6; border-radius: 6px;">
+        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+          <input type="checkbox" id="autoReconnect" style="width: auto; margin-right: 10px; cursor: pointer;">
+          <span style="font-size: 13px; color: #374151;">
+            <strong>Reconnexion automatique</strong><br>
+            <small style="color: #6b7280;">Se reconnecter automatiquement après déconnexion</small>
+          </span>
+        </label>
+      </div>
+      
+      <a class="toggle-section" id="toggleAdd">+ Ajouter un nouveau site</a>
+      
+      <div id="addForm" class="hidden">
+        <div class="form-group">
+          <label>Nom du site</label>
+          <input type="text" id="siteName" placeholder="Ex: Gmail">
+        </div>
+        
+        <div class="form-group">
+          <label>URL du site</label>
+          <input type="url" id="siteUrl" placeholder="https://example.com">
+        </div>
+        
+        <div class="form-group">
+          <label>Sélecteur champ email/username</label>
+          <div style="display: flex; gap: 5px;">
+            <input type="text" id="emailSelector" placeholder="#email ou input[name='username']" style="flex: 1;">
+            <button type="button" class="btn btn-primary" id="pickEmail" style="width: auto; padding: 10px 15px; font-size: 20px;" title="Sélectionner visuellement">🎯</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Email/Username</label>
+          <input type="text" id="email" placeholder="votre@email.com">
+        </div>
+        
+        <div class="form-group">
+          <label>Sélecteur champ mot de passe</label>
+          <div style="display: flex; gap: 5px;">
+            <input type="text" id="passwordSelector" placeholder="#password ou input[type='password']" style="flex: 1;">
+            <button type="button" class="btn btn-primary" id="pickPassword" style="width: auto; padding: 10px 15px; font-size: 20px;" title="Sélectionner visuellement">🎯</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" id="password" placeholder="••••••••">
+        </div>
+        
+        <div class="form-group">
+          <label>Sélecteur bouton connexion (optionnel)</label>
+          <div style="display: flex; gap: 5px;">
+            <input type="text" id="submitSelector" placeholder="button[type='submit']" style="flex: 1;">
+            <button type="button" class="btn btn-primary" id="pickSubmit" style="width: auto; padding: 10px 15px; font-size: 20px;" title="Sélectionner visuellement">🎯</button>
+          </div>
+        </div>
+        
+        <button id="saveBtn" class="btn btn-primary">💾 Sauvegarder</button>
+      </div>
+      
+      <div class="saved-sites">
+        <h3 style="font-size: 14px; margin-bottom: 10px; color: #555;">Sites sauvegardés</h3>
+        <div id="sitesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

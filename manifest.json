@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Login - One Click",
+  "version": "2.0",
+  "description": "Extension pour se connecter automatiquement en un clic sur vos sites favoris",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["selector-detector.js", "visual-picker.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
